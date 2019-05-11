@@ -1,7 +1,6 @@
 # Chapter 03: Activities
 
-Column: May 04, 2019 4:38 PM
-Description: Android apps are built around a set of screens that have a specific purpose. Each screen you see in an app is known as an Activity. An Activity is built around a single task that you want your user to perform.
+Android apps are built around a set of screens that have a specific purpose. Each screen you see in an app is known as an Activity. An Activity is built around a single task that you want your user to perform.
 FInished: No
 
 # Resources
