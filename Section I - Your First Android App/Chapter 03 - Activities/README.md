@@ -20,27 +20,27 @@ FInished: No
 # Exploring Activities
 
 `GameActivity.kt`
-
-    package com.raywenderlich.timefighter
+```Kotlin
+   package com.raywenderlich.timefighter
     
-    import android.support.v7.app.AppCompatActivity
-    import android.os.Bundle
-    
-    // 1 GameActivity extends AppCompatActivity which is required to deal with content
-    // onscreen
-    class GameActivity : AppCompatActivity() {
-      // 2 onCreate is the entry point of Activities
-      override fun onCreate(savedInstanceState: Bundle?) {
+   import android.support.v7.app.AppCompatActivity
+   import android.os.Bundle
+   
+   // 1 GameActivity extends AppCompatActivity which is required to deal with content
+   // onscreen
+   class GameActivity : AppCompatActivity() {
+    // 2 onCreate is the entry point of Activities
+    override fun onCreate(savedInstanceState: Bundle?) {
         // 3 Calling the base class's method is required because it must set up some 
-    		// things first before your implementation executes.
+  	    // things first before your implementation executes.
         super.onCreate(savedInstanceState)
         // 4 Takes the layout you created and puts it on the device's screen
         setContentView(R.layout.activity_game)
       }
     }
-
+```
 `GameActivity.kt`
-
+```Kotlin
     package com.raywenderlich.timefighter
     
     import android.os.Bundle
@@ -77,9 +77,9 @@ FInished: No
         // end game logic
       }
     }
-
+```
 # Hooking up the views
-
+```Kotlin
     // 1 findViewById() searches through your activity_game layout file to find the 
     // view with the corresponding ID
     gameScoreTextView = findViewById<TextView>(R.id.game_score_text_view)
@@ -91,20 +91,20 @@ FInished: No
     // 2 setOnClickListener() attaches a click listener to the Button which calls
     // incrementScore()
     tapMeButton.setOnClickListener { v -> incrementScore() }
-
+```
 Add a new variable to GameActivity and initialize it to 0
-
+```Kotlin
     internal var score = 0
-
+```
 Next replace the contents of `incrementScore()` with the following
-
+```Kotlin
     private fun incrementScore() {
     	score++
     
     	val newScore = "Your Score: " + Integer.toString(score)
     	gameScoreTextView.text = newScore
     }
-
+```
 ![](Untitled-38867531-84f3-4c5c-8f06-ebbfe88c3d89.png)
 
 # Managing strings in your app
@@ -112,7 +112,7 @@ Next replace the contents of `incrementScore()` with the following
 String resources allow you to support multiple languages in your without being forced to write spaghetti code.
 
 This also allows you to prevent strings from being sprinkled throughout your code.
-
+```xml
 `string.xml`
 
     <resources>
@@ -122,31 +122,31 @@ This also allows you to prevent strings from being sprinkled throughout your cod
     	<string name="time_left">Time left: %s</string>
     	<string name="game_over_message">Times up! Your score was: %s</string>
     </resources>
-
+```
 In GameActivity, replace the contents of the `incrementScore()` method
-
+```Kotlin
     private fun incrementScore() {
     	score++
     
     	val newScore = getString(R.string.your_score, Integer.toString(score))
     	gameScoreTextView.text = newScore
     }
-
+```
 `getString()` is an Activity provided method that allows you to grab string from the R file name or ID. The strings reside in `strings.xml`
 
 # Progressing the game
 
 At the top of the GameActivity class add the following new properties underneath your View properties
-
+```Kotlin
     internal var gameStarted = false
     
     internal lateinit var countDownTimer: CountDownTimer
     internal var initialCountDown: Long = 6000
     internal var countDownInterval: Long = 1000
     internal var timeLeft = 60
-
+```
 In GameActivity, replace the contents of `resetGame()`
-
+```Kotlin
     private fun resetGame() {
     	// 1 Set the score to 0, convert it into a string, and use getString() to insert 
     	// the score value into your string stored in strings.xml. Then initailize the 
@@ -181,28 +181,28 @@ In GameActivity, replace the contents of `resetGame()`
     	// false
     	gameStarted = false
     }
-
+```
 # Starting the game
 
 Replace `startGame()` with the following
-
+```Kotlin
     // Inform the countdown timer to start. Also set gameStarted to true to
     // notitify any concerned parties that the game has started
     private fun startGame() {
     	countDownTimer.start()
     	gameStarted = true
     }
-
+```
 Add the following to the top of `incrementScore()`
-
+```Kotlin
     if (!gameStarted) {
     	startGame()
     }
-
+```
 # Ending the game
 
 In `GameActivity` replace the `endGame()` method with the following
-
+```Kotlin
     private fun endGame() {
     	Toast.makeText(
     		this, 
@@ -210,7 +210,8 @@ In `GameActivity` replace the `endGame()` method with the following
     		Toast.LENGTH_LONG).show())
     	resetGame()
     }
-
+```
 In `resetGame()` add the following to `onFinish()`
-
+```Kotlin
     endGame()
+```
